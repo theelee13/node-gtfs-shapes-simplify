@@ -5,8 +5,10 @@ var simple = require('simplify-polyline');
 module.exports = {
 	simplify: function(loc, epsilon, callback){
 		var polyline = getArray(loc, callback);
-		var sortedLine = polyLine;
+		//insert a method for breaking apart the array into multiple by shape_id. Then wrap this in a loop.
+		var sortedLine = polyLine.sort(compare(a,b));
 		var finalLine = simple.simplify(sortedLine,epsilon);
+		writeToFile(finalLine);
 	}
 }
 
@@ -36,4 +38,26 @@ getObject = function(record){
 	obj.place = record.shape_pt_sequence;
 	obj.shapeID = record.shape_id;
 	return obj;
+}
+
+writeToFile = function (coords){
+	
+}
+
+compare = function (a,b){
+	if(+a.place < +b.place){
+		return -1;
+	}
+	if(+a.place > +b.place){
+		return 1;
+	}
+	return 0;
+}
+
+getDataArray = function (record){
+	array = [];
+	array.push(record.shape_id);
+	array.push(record.shape_pt_lat);
+	array.push(record.shape_pt_lon);
+	array.push(record.shape_pt_sequence);
 }
