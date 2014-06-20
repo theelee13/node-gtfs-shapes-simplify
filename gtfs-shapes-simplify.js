@@ -6,26 +6,44 @@
 var simple = require('simplify-polyline');
 
 module.exports = {
-	simplify: function(loc, epsilon, callback){
-		var finalLine = simple.simplify(sortedLine,epsilon);
+	simplify: function(documents, epsilon, box){
+		var shortenedDocs = shorten(documents,box);
+		var alteredDocs = translate(shortenedDocs);	
+		var finalLine = simple.simplify(alteredDocs,epsilon);
 	}
 }
 
-getArray = function(loc, callback){
-	var coordArray = [];
-	var filestream = fs.createReadStream(loc);
-	var parser = parse({columns:true});
-	parser.on('data',function(record){
-		parser.pause();
-		coordArray.push(getObject(record));
-		parser.resume();
-	});
-	parser.on('error', function(err){
-		return callback(err);
-	});
-	parser.on('end',function(){
-		console.log("Loaded all Shapes objects. Beginning algorithm.");
-	});
-	filestream.pipe(parser);
-	return coordArray;
+//getting syntax error here. TODO fix.
+var shorten = function (docs, bounds){
+	var southWest = bounds.getSouthWest();
+	var northEast = bounds.getNorthEast();
+	return _.filter(docs,function(shapesObject){
+		var shapeLat = shapesObject.shape_pt_lat;
+		if((shapeLat>southWest.lat())&&(shapeLat<northEast.lat())){
+			var shapeLon = shapesObject.shape_pt_lon;
+			if((shapeLon>southWest.lon())&&(shapeLon<northEast.lon())){
+				return true;
+			}
+		}
+	}
 }
+
+var translate = function (docs){
+	for(var i = 0;i<docs.length;i++){
+		docs[i].x=docs[i].shape_pt_lon;
+		docs[i].y=docs[i].shape_pt_lat;
+	}
+	return docs;
+}
+
+
+//test for translate.
+var arbitraryArray = [
+	{shape_pt_lon: -34,shape_pt_lat: 80},
+	{shape_pt_lon: -33,shape_pt_lat: 82}
+];
+var translated = translate(arbitraryArray);
+translated.forEach(function(obj){
+	console.log(obj.x+' '+obj.y);
+});
+
