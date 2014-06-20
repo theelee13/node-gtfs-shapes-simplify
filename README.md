@@ -18,7 +18,7 @@ documents:
 epsilon:
   a value, representing a distance, which all points are compared to in the algorithm. The larger the epsilon, the fewer points accepted. A sufficiently large epsilon will only return two points, the first and last.
 context:
-  the object returned from a Maps API `getBounds()` call, a LatLngBounds() object. This allows for the processing of only necessary shapes points.
+  the object returned from a Maps API `getBounds()` call, a LatLngBounds object. This allows for the processing of only necessary shapes points.
 
 Concept
 ===
