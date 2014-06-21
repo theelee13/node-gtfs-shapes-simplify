@@ -1,8 +1,3 @@
-/*
- *	Undergoing a rework. Instead of working with the shapes file directly (and needing the csv-parser and fs)
- *	we'll now assume an individual shape is passed through with its points in order. 
- */
-
 var simple = require('simplify-polyline');
 
 module.exports = {
@@ -13,7 +8,6 @@ module.exports = {
 	}
 }
 
-//getting syntax error here. TODO fix.
 var shorten = function (docs, bounds){
 	var southWest = bounds.getSouthWest();
 	var northEast = bounds.getNorthEast();
@@ -25,7 +19,7 @@ var shorten = function (docs, bounds){
 				return true;
 			}
 		}
-	}
+	});
 }
 
 var translate = function (docs){
@@ -35,15 +29,3 @@ var translate = function (docs){
 	}
 	return docs;
 }
-
-
-//test for translate.
-var arbitraryArray = [
-	{shape_pt_lon: -34,shape_pt_lat: 80},
-	{shape_pt_lon: -33,shape_pt_lat: 82}
-];
-var translated = translate(arbitraryArray);
-translated.forEach(function(obj){
-	console.log(obj.x+' '+obj.y);
-});
-
