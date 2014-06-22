@@ -42,7 +42,7 @@ var testFunction = function (arr){
 			return LatLngSW;				  
 		}
 	}
-	var array2 = simple.simplify(arr,.001,fakeBoundsObject);
+	var array2 = simple.filter(arr,.001,fakeBoundsObject);
 	array2.forEach(function(doc){
 		console.log(doc);
 	});

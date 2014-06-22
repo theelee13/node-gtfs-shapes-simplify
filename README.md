@@ -28,3 +28,28 @@ Concept
 The goal of this module is to simplify the shapes collection in a database, providing a smaller collection for one to deal with. The original idea was to do this before uploading the shapes collection to the database, lessening the overall size. 
 
 Instead, the module works dynamically, accepting an array of documents and returning an array of fewer documents, depending on the size of the map used (bounding-box) and the accuracy requested (epsilon value).
+
+Results
+===
+The following is the output from the test run of `node test.js`
+````
+60 outside box.
+47 eliminated by RDP
+{	shape_id: '86179',
+	shape_pt_lat: '34.06895',
+   shape_pt_lon: '-84.26064',
+	shape_pt_sequence: '26',
+	x: -84.26064,
+	y: 34.06895 }
+
+<8 more documents edited out for brevity>
+
+{	shape_id: '86179',
+	shape_pt_lat: '34.0154',
+	shape_pt_lon: '-84.329099',
+	shape_pt_sequence: '82',
+	x: -84.329099,
+	y: 34.0154 }
+````
+
+In the test example case, using an epsilon of .001 and a bounding box that eliminates 60 documents, we effectively bring the polyline from 117 points to just 10.
