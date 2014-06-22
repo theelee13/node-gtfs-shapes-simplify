@@ -2,7 +2,7 @@ var simple = require('simplify-polyline');
 var _ = require('underscore');
 
 module.exports = {
-	simplify: function(documents, epsilon, box){
+	filter: function(documents, epsilon, box){
 		var originalLength = documents.length;
 		var shortenedDocs = shorten(documents,box);
 		console.log(originalLength-shortenedDocs.length+' outside box.');
