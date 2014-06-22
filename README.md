@@ -7,7 +7,7 @@ Usage
 ===
 ````
 var simple = require('gtfs-shapes-simplify');
-var newDocs = simple.simplify(documents,epsilon,context);
+var newDocs = simple.filter(documents,epsilon,context);
 newDocs.forEach(function(document){
   console.log(document);
 });
